@@ -42,4 +42,14 @@ public class QuestionController {
         return ResponseEntity.ok(question);
     }
 
+    @GetMapping("/question/create")
+    public String questionCreate() {
+        return "question_form";
+    }
+    @PostMapping("/question/create")
+    public String questionCreate(@RequestParam(value="subject") String subject, @RequestParam(value="content") String content) {
+        Question question = questionService.create(subject, content);
+        return "redirect:/question/list"; // 질문 저장후 질문목록으로 이동
+    }
+
 }
