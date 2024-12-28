@@ -5,6 +5,8 @@ import JumptoSpringboot.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -18,13 +20,22 @@ public class QuestionService {
     public List<Question> getList() {
         return this.questionRepository.findAll();
     }
+
     public Question getQuestion(Integer id) {
         Optional<Question> question = this.questionRepository.findById(id);
-        if (question.isPresent()) {
-            return question.get();
-        } else {
-            throw new DataNotFoundException("question not found");
-        }
-        //return question.orElseThrow(() -> new IllegalArgumentException("Error!"));
+        /// do not code without understanding.
+        /// if there's some error on your test,
+        //// you should remove code without understanding first
+        return question.orElseThrow(() -> new IllegalArgumentException("Error!"));
+    }
+
+    public Question create(String subject, String content) {
+        Question question = new Question();
+        question.setId(null);
+        question.setCreateDate(LocalDateTime.now());
+        question.setSubject(subject);
+        question.setContent(content);
+        question.setAnswerList(new ArrayList<>());
+        return questionRepository.save(question);
     }
 }
