@@ -35,13 +35,6 @@ public class QuestionController {
 ///        model.addAttribute("questionList", questionList);
         return "question_list";
     }
-
-    @GetMapping("/question/detail/{id}")
-    public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm) {
-        Question question = questionService.getQuestion(id);// 404
-        model.addAttribute("question", question);
-        return "question_detail";
-    }
 /*
     @PostMapping("/question")
     public ResponseEntity<Question> create(
@@ -51,6 +44,14 @@ public class QuestionController {
         Question question = questionService.create(subject, content, userService.);
         return ResponseEntity.ok(question);
     }*/
+
+
+    @GetMapping("/question/detail/{id}")
+    public String detail(Model model, @PathVariable("id") Integer id, AnswerForm answerForm) {
+        Question question = questionService.getQuestion(id);// 404
+        model.addAttribute("question", question);
+        return "question_detail";
+    }
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/question/create")
