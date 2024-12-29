@@ -1,6 +1,7 @@
 package JumptoSpringboot.service;
 
 import JumptoSpringboot.domain.Question;
+import JumptoSpringboot.domain.SiteUser;
 import JumptoSpringboot.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -33,12 +34,13 @@ public class QuestionService {
         return question.orElseThrow(() -> new IllegalArgumentException("Error!"));
     }
 
-    public Question create(String subject, String content) {
+    public Question create(String subject, String content, SiteUser user) {
         Question question = new Question();
         question.setId(null);
         question.setCreateDate(LocalDateTime.now());
         question.setSubject(subject);
         question.setContent(content);
+        question.setAuthor(user);
         question.setAnswerList(new ArrayList<>());
         return questionRepository.save(question);
     }

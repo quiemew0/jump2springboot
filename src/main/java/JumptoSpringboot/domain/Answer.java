@@ -18,6 +18,7 @@ public class Answer {
     private String content;
 
     private LocalDateTime createDate;
+    private LocalDateTime modifyDate;
 
     @ManyToOne //부모 question(1), 자식 answer(n)
     private Question question;
@@ -31,4 +32,6 @@ public class Answer {
         this.createDate = createDate;
         this.question = question;
     }
+    @ManyToOne
+    private SiteUser author;
 }

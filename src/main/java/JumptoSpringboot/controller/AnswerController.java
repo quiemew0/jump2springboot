@@ -2,12 +2,21 @@ package JumptoSpringboot.controller;
 
 
 import JumptoSpringboot.domain.Question;
+import JumptoSpringboot.domain.SiteUser;
+import JumptoSpringboot.service.AnswerForm;
 import JumptoSpringboot.service.AnswerService;
 import JumptoSpringboot.service.QuestionService;
+import JumptoSpringboot.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 
 @RequiredArgsConstructor
@@ -16,12 +25,28 @@ public class AnswerController {
 
     private final QuestionService questionService;
     private final AnswerService answerService;
+    private final UserService userService;
+//    @PostMapping("/answer/create/{id}")
+//    public String createAnswer(@PathVariable("id") Integer id,
+//                               @RequestParam (value = "content") String content) {
+//        Question question = questionService.getQuestion(id);
+//        answerService.create(question, content);
+//        return String.format("redirect:/question/detail/%s", id);
+//    }
 
+    // principal (스프링시큐리티 제공 - 로그인한 사용자 정보 알기 위한 객체)
+    // principal.getName() 로그인한 사용자명
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/answer/create/{id}")
-    public String createAnswer(@PathVariable("id") Integer id,
-                               @RequestParam (value = "content") String content) {
-        Question question = questionService.getQuestion(id);
-        answerService.create(question, content);
+    public String createAnswer(Model model, @PathVariable("id") Integer id,
+                               @Valid AnswerForm answerForm, BindingResult bindingResult, Principal principal) {
+        Question question = this.questionService.getQuestion(id);
+        SiteUser siteUser = this.userService.getUser(principal.getName());
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("question", question);
+            return "question_detail";
+        }
+        this.answerService.create(question, answerForm.getContent(),siteUser);
         return String.format("redirect:/question/detail/%s", id);
     }
 }

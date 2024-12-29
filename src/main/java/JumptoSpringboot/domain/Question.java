@@ -21,7 +21,7 @@ public class Question {
 
     @Column(columnDefinition = "TEXT")
     private String content;
-
+    private LocalDateTime modifyDate;
     private LocalDateTime createDate;
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE) // property 명 question을 적음
@@ -37,4 +37,7 @@ public class Question {
         this.createDate = createDate;
         this.answerList = answerList;
     }
+
+    @ManyToOne
+    private SiteUser author;
 }
