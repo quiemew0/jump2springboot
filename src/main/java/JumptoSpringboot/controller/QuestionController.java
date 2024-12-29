@@ -106,6 +106,14 @@ public class QuestionController {
         this.questionService.delete(question);
         return "redirect:/";
     }
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("question/vote/{id}")
+    public String questionVote(Principal principal, @PathVariable("id") Integer id) {
+        Question question = this.questionService.getQuestion(id);
+        SiteUser siteUser = this.userService.getUser(principal.getName());
+        this.questionService.vote(question, siteUser);
+        return String.format("redirect:/question/detail/%s", id);
+    }
     // QuestionForm 의 subject, content 속성이 자동으로 바인딩.
 //    @PostMapping("/question/create")
 //    public String questionCreate(@RequestParam(value="subject") String subject, @RequestParam(value="content") String content) {
