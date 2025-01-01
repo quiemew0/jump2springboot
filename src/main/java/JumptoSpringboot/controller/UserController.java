@@ -1,6 +1,6 @@
 package JumptoSpringboot.controller;
 
-import JumptoSpringboot.service.UserCreateForm;
+import JumptoSpringboot.dto.UserCreateForm;
 import JumptoSpringboot.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +29,7 @@ public class UserController {
         if (!userCreateForm.getPassword1().equals(userCreateForm.getPassword2())) {
             bindingResult.rejectValue("password2", "passwordInCorrect",
                     "2개의 패스워드가 일치하지 않습니다.");
-            System.out.println("재량재량재량");
+            //System.out.println("재량재량재량");
             return "signup_form";
         }
 
@@ -38,7 +38,7 @@ public class UserController {
                     userCreateForm.getEmail(), userCreateForm.getPassword1());
         }catch(DataIntegrityViolationException e) {
             //e.printStackTrace();
-            System.out.println("이미등록된재량재량재량");
+            //System.out.println("이미등록된재량재량재량");
             bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");
             return "signup_form";
         }catch(Exception e) {

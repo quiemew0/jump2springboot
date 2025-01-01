@@ -2,12 +2,13 @@ package JumptoSpringboot.controller;
 
 import JumptoSpringboot.domain.Question;
 import JumptoSpringboot.domain.SiteUser;
+import JumptoSpringboot.dto.AnswerForm;
+import JumptoSpringboot.dto.QuestionForm;
 import JumptoSpringboot.service.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +18,6 @@ import org.springframework.web.server.ResponseStatusException;
 
 
 import java.security.Principal;
-import java.util.List;
 
 
 @RequiredArgsConstructor

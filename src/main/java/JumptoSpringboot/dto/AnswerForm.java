@@ -1,4 +1,4 @@
-package JumptoSpringboot.service;
+package JumptoSpringboot.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;

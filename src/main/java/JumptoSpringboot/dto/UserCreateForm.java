@@ -1,4 +1,4 @@
-package JumptoSpringboot.service;
+package JumptoSpringboot.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -23,3 +23,4 @@ public class UserCreateForm {
     @Email
     private String email;
 }
+
